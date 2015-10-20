@@ -1,10 +1,6 @@
 # Vamana2
 [Vamana2](https://en.wikipedia.org/wiki/Vamana) is your buddy on AWS when you're managing systems behind AutoScaling Groups. It fills the missing gaps on ASG for scaling clusters.
 
-## Use Case(s)
-- You want to implement an autoscaling Hadoop1 Cluster. When required should scale up and when not being used, should scale down.
-- You're running various applications on your YARN / Mesos clusters. When required you now want to scale up and down your cluster on usage.
-
 ## Motivation
 I'm managing quite a number of Hadoop Cluster (across environments) whose TTs are backed by Auto Scaling Groups (ASG). 
 Each cluster has its own usage patterns. Certain clusters run 24x7 while certain other clusters need to be up only during certain duration (when we have jobs running) and not always.
