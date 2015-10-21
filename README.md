@@ -39,7 +39,9 @@ vamana {
 
 ## Features
 - [x] Pluggable Metric Collector
+  - [x] Amazon CloudWatch
 - [x] Pluggable Scalar
+  - [ ] Hadoop1
 - [ ] Pluggable AutoScalar
   - [x] AutoScaling on AWS
   - [ ] AutoScaler on GCE
