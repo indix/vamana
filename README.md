@@ -47,5 +47,11 @@ vamana {
   - [ ] AutoScaler on GCE
   - [ ] [Vamana1](http://github.com/ashwanthkumar/vamana) for others?
 
+## References / Inspirations
+- http://techblog.netflix.com/2013/11/scryer-netflixs-predictive-auto-scaling.html - Closed source
+- https://clusterk.com/products/balancer/ - Paid service
+- http://www.qubole.com/blog/product/industrys-first-auto-scaling-hadoop-clusters/ - Paid service
+
+
 ## License
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
