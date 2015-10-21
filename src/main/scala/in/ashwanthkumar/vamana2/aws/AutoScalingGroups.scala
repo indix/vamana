@@ -1,7 +1,7 @@
 package in.ashwanthkumar.vamana2.aws
 
 import com.amazonaws.services.autoscaling.AmazonAutoScalingClient
-import com.amazonaws.services.autoscaling.model.{UpdateAutoScalingGroupRequest, DescribeAutoScalingGroupsRequest}
+import com.amazonaws.services.autoscaling.model.{DescribeAutoScalingGroupsRequest, UpdateAutoScalingGroupRequest}
 import in.ashwanthkumar.vamana2.core.AutoScalar
 
 import scala.collection.JavaConverters._
@@ -19,7 +19,7 @@ class AutoScalingGroups(client: AmazonAutoScalingClient) extends AutoScalar {
     asgs match {
       case x if x.isEmpty => throw new RuntimeException(s"Autoscaling Group $cluster not found")
       case x if x.size > 1 => throw new RuntimeException(s"Multiple AutoScaling groups found for $cluster")
-      case x :: tail => x.getDesiredCapacity
+      case x :: Nil => x.getDesiredCapacity
     }
   }
   /**
