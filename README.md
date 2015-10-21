@@ -17,22 +17,33 @@ Each cluster has its own usage patterns. Certain clusters run 24x7 while certain
 Sample configuration would be
 ```
 vamana {
-  # Configuration for each cluster goes in here
   clusters = [{
-    # Name of the cluster (Optional)
+    # Name of the cluster
     name = "Hadoop1 Staging Cluster"
-    # Autoscaling group backing the Cluster
-    asg = "as-hadoop-staging-spot"
+    # Identifier used by AutoScalar when resizing the cluster
+    as-id = "as-hadoop-staging-spot"
+    # Maximum number of nodes the cluster can scale upto
+    max-nodes = 5
+    # Minimum number of nodes in the cluster
+    # We throw an RuntimeException if the Scalar returns less than this value
+    min-nodes = 1
     metrics {
-      # Demand related metrics
+      # Metrics that represent your demand
       demand = ["map_count_demand", "reduce_count_demand"]
-      # Supply related metrics
+      # Metrics that represent your supply
       supply = ["map_count_supply", "reduce_count_supply"]
-      # Metric Source
-      source = "cloudwatch"
-      # Scalar implementation for this cluster
-      scalar = "in.ashwanthkumar.vamana2.examples.HadoopScalar"
+      # Namespace for your metrics (Optional)
+      # Useful when using Amazon CloudWatch
+      namespace = "Hadoop"
+      # Dimension for your metrics (Optional)
+      dimension = "Staging"
     }
+    # Collector Implementation to use
+    collector = "in.ashwanthkumar.vamana2.aws.CloudWatchCollector"
+    # Autoscalar Implementation to use
+    autoscalar = "in.ashwanthkumar.vamana2.aws.AutoScalingGroups"
+    # Scalar Implementation to use
+    scalar = "in.ashwanthkumar.vamana2.examples.HadoopScalar"
   }]
 }
 ```
@@ -49,9 +60,7 @@ vamana {
 
 ## References / Inspirations
 - http://techblog.netflix.com/2013/11/scryer-netflixs-predictive-auto-scaling.html - Closed source
-- https://clusterk.com/products/balancer/ - Paid service
 - http://www.qubole.com/blog/product/industrys-first-auto-scaling-hadoop-clusters/ - Paid service
-
 
 ## License
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
