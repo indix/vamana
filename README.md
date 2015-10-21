@@ -1,3 +1,5 @@
+[![Build Status](https://snap-ci.com/ashwanthkumar/vamana2/branch/master/build_image)](https://snap-ci.com/ashwanthkumar/vamana2/branch/master)
+
 # Vamana2
 [Vamana2](https://en.wikipedia.org/wiki/Vamana) is your buddy on AWS when you're managing systems behind AutoScaling Groups. It fills the missing gaps on ASG for scaling clusters.
 
