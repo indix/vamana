@@ -20,21 +20,28 @@ vamana {
   clusters = [{
     # Name of the cluster
     name = "Hadoop1 Staging Cluster"
+
     # Identifier used by AutoScalar when resizing the cluster
     as-id = "as-hadoop-staging-spot"
+
     # Maximum number of nodes the cluster can scale upto
     max-nodes = 5
+
     # Minimum number of nodes in the cluster
     # We throw an RuntimeException if the Scalar returns less than this value
     min-nodes = 1
+
     metrics {
       # Metrics that represent your demand
       demand = ["map_count_demand", "reduce_count_demand"]
+
       # Metrics that represent your supply
       supply = ["map_count_supply", "reduce_count_supply"]
+
       # Namespace for your metrics (Optional)
       # Useful when using Amazon CloudWatch
       namespace = "Hadoop"
+
       # Dimension for your metrics (Optional)
       # Useful when using Amazon CloudWatch
       dimensions {
@@ -42,10 +49,13 @@ vamana {
         name2 = "value2"
       }
     }
+
     # Collector Implementation to use
     collector = "in.ashwanthkumar.vamana2.aws.CloudWatchCollector"
+
     # Autoscalar Implementation to use
     autoscalar = "in.ashwanthkumar.vamana2.aws.AutoScalingGroups"
+
     # Scalar Implementation to use
     scalar = "in.ashwanthkumar.vamana2.examples.HadoopScalar"
   }]
