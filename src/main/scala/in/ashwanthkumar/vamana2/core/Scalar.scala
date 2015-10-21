@@ -13,7 +13,7 @@ trait Supply {
 case class Context(currentSize: Int, cluster: Cluster)
 object Context {
   def apply(autoScalar: AutoScalar, cluster: Cluster): Context = {
-    Context(autoScalar.currentNodes(cluster.asg), cluster)
+    Context(autoScalar.currentNodes(cluster.asId), cluster)
   }
 }
 

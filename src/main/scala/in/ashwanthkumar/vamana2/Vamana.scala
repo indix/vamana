@@ -31,7 +31,7 @@ object Vamana extends App {
 
     // Step 3 - Update the autoscalar accordingly
     logInfo(s"Updating the current cluster size to $newNodesCount")
-    autoscalar.scaleTo(cluster.asg, newNodesCount)
+    autoscalar.scaleTo(cluster.asId, newNodesCount)
   })
 
   def logInfo(message: String)(implicit cluster: Cluster): Unit = {

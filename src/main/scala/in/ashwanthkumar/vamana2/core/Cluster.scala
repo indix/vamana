@@ -17,14 +17,14 @@ object MetricsConfig {
   }
 }
 
-case class Cluster(name: String, asg: String, minNodes: Int, maxNodes: Int, metricsConfig: MetricsConfig,
+case class Cluster(name: String, asId: String, minNodes: Int, maxNodes: Int, metricsConfig: MetricsConfig,
                    scalar: String, collector: String, autoscalar: String)
 object Cluster {
   def fromConfig(config: Config) = {
     val metricsConfig = MetricsConfig.fromConfig(config.getConfig("metrics"))
     Cluster(
       name = config.getString("name"),
-      asg = config.getString("asg"),
+      asId = config.getString("as-id"),
       minNodes = config.getInt("min-nodes"),
       maxNodes = config.getInt("max-nodes"),
       metricsConfig = metricsConfig,

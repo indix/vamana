@@ -10,7 +10,7 @@ class ConfigReaderTest extends FlatSpec {
 
     val cluster = vamanaConfig.clusters.head
     cluster.name should be("Hadoop1 Staging Cluster")
-    cluster.asg should be("as-hadoop-staging-spot")
+    cluster.asId should be("as-hadoop-staging-spot")
     cluster.maxNodes should be(5)
     cluster.minNodes should be(1)
     cluster.collector should be("in.ashwanthkumar.vamana2.aws.CloudWatchCollector")
