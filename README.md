@@ -36,7 +36,11 @@ vamana {
       # Useful when using Amazon CloudWatch
       namespace = "Hadoop"
       # Dimension for your metrics (Optional)
-      dimension = "Staging"
+      # Useful when using Amazon CloudWatch
+      dimensions {
+        name1 = "value1"
+        name2 = "value2"
+      }
     }
     # Collector Implementation to use
     collector = "in.ashwanthkumar.vamana2.aws.CloudWatchCollector"
