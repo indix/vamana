@@ -13,13 +13,14 @@ class ConfigReaderTest extends FlatSpec {
     cluster.asg should be("as-hadoop-staging-spot")
     cluster.maxNodes should be(5)
     cluster.minNodes should be(1)
+    cluster.collector should be("in.ashwanthkumar.vamana2.aws.CloudWatchCollector")
+    cluster.autoscalar should be("in.ashwanthkumar.vamana2.aws.AutoScalingGroups")
+    cluster.scalar should be("in.ashwanthkumar.vamana2.examples.HadoopScalar")
 
     val expectedMetrics = MetricsConfig(
       demand = List("map_count_demand", "reduce_count_demand"),
       supply = List("map_count_supply", "reduce_count_supply"),
-      source = "cloudwatch",
-      namespace = "HadoopStaging",
-      scalar = "in.ashwanthkumar.vamana2.examples.HadoopScalar"
+      namespace = "HadoopStaging"
     )
     cluster.metricsConfig should be(expectedMetrics)
   }

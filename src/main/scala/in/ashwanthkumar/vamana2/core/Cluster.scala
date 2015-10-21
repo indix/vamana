@@ -6,20 +6,19 @@ import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.collection.JavaConverters._
 
-case class MetricsConfig(demand: List[String], supply: List[String], source: String, namespace: String, scalar: String)
+case class MetricsConfig(demand: List[String], supply: List[String], namespace: String)
 object MetricsConfig {
   def fromConfig(config: Config) = {
     MetricsConfig(
       demand = config.getStringList("demand").asScala.toList,
       supply = config.getStringList("supply").asScala.toList,
-      source = config.getString("source"),
-      namespace = config.getString("namespace"),
-      scalar = config.getString("scalar")
+      namespace = config.getString("namespace")
     )
   }
 }
 
-case class Cluster(name: String, asg: String, minNodes: Int, maxNodes: Int, metricsConfig: MetricsConfig)
+case class Cluster(name: String, asg: String, minNodes: Int, maxNodes: Int, metricsConfig: MetricsConfig,
+                   scalar: String, collector: String, autoscalar: String)
 object Cluster {
   def fromConfig(config: Config) = {
     val metricsConfig = MetricsConfig.fromConfig(config.getConfig("metrics"))
@@ -28,7 +27,10 @@ object Cluster {
       asg = config.getString("asg"),
       minNodes = config.getInt("min-nodes"),
       maxNodes = config.getInt("max-nodes"),
-      metricsConfig = metricsConfig
+      metricsConfig = metricsConfig,
+      scalar = config.getString("scalar"),
+      collector = config.getString("collector"),
+      autoscalar = config.getString("autoscalar")
     )
   }
 }
