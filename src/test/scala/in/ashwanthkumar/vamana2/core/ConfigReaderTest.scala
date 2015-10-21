@@ -20,7 +20,11 @@ class ConfigReaderTest extends FlatSpec {
     val expectedMetrics = MetricsConfig(
       demand = List("map_count_demand", "reduce_count_demand"),
       supply = List("map_count_supply", "reduce_count_supply"),
-      namespace = "HadoopStaging"
+      namespace = Some("HadoopStaging"),
+      dimensions = Map(
+        "name1" -> "value1",
+        "name2" -> "value2"
+      )
     )
     cluster.metricsConfig should be(expectedMetrics)
   }

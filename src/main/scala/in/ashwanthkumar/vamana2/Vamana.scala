@@ -18,9 +18,9 @@ object Vamana extends App {
 
     // Step 1 - Collect Demand and Supply Metrics using a Collector
     logInfo(s"Fetching Demand metrics")
-    val demandMetrics = collector.collectMetrics(metricsConfig.namespace, metricsConfig.demand)
+    val demandMetrics = collector.collectMetrics(metricsConfig.demand, metricsConfig)
     logInfo(s"Fetching Supply metrics")
-    val supplyMetrics = collector.collectMetrics(metricsConfig.namespace, metricsConfig.supply)
+    val supplyMetrics = collector.collectMetrics(metricsConfig.supply, metricsConfig)
 
     // Step 2 - Determine the required number of nodes using the Scalar
     logInfo(s"Using ${cluster.scalar} as scalar implementation")

@@ -6,14 +6,24 @@ import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.collection.JavaConverters._
 
-case class MetricsConfig(demand: List[String], supply: List[String], namespace: String)
+case class MetricsConfig(demand: List[String], supply: List[String], namespace: Option[String], dimensions: Map[String, String])
 object MetricsConfig {
   def fromConfig(config: Config) = {
+    val dimensions = config.getConfig("dimensions")
+      .entrySet().asScala
+      .map(entry => entry.getKey -> entry.getValue.unwrapped().toString)
+      .toMap
     MetricsConfig(
       demand = config.getStringList("demand").asScala.toList,
       supply = config.getStringList("supply").asScala.toList,
-      namespace = config.getString("namespace")
+      namespace = stringOption(config, "namespace"),
+      dimensions = dimensions
     )
+  }
+
+  private def stringOption(config: Config, key: String) = {
+    if(config.hasPath(key)) Some(config.getString(key))
+    else None
   }
 }
 

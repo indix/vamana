@@ -6,7 +6,7 @@ case class Point(value: Double, timestamp: Long)
 case class Metric(name: String, points: List[Point])
 
 trait Collector {
-  def collectMetrics(namespace: String, metrics: List[String]): List[Metric]
+  def collectMetrics(metrics: List[String], config: MetricsConfig): List[Metric]
 }
 
 object CollectorFactory {
