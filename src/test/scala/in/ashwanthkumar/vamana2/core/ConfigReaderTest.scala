@@ -18,6 +18,7 @@ class ConfigReaderTest extends FlatSpec {
       demand = List("map_count_demand", "reduce_count_demand"),
       supply = List("map_count_supply", "reduce_count_supply"),
       source = "cloudwatch",
+      namespace = "HadoopStaging",
       scalar = "in.ashwanthkumar.vamana2.examples.HadoopScalar"
     )
     cluster.metricsConfig should be(expectedMetrics)
