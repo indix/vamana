@@ -25,6 +25,31 @@ class AutoScalingGroupsTest extends FlatSpec {
     request.getValue.getAutoScalingGroupNames.asScala should contain("test-cluster")
   }
 
+  it should "throw error when name doesn't yield any auto scaling groups" in {
+    val request = ArgumentCaptor.forClass(classOf[DescribeAutoScalingGroupsRequest])
+
+    val mockResult = new DescribeAutoScalingGroupsResult()
+    when(mockClient.describeAutoScalingGroups(request.capture())).thenReturn(mockResult)
+    val awsAutoScalingGroup = new AutoScalingGroups(mockClient)
+
+    intercept[RuntimeException] {
+      awsAutoScalingGroup.currentNodes("test-cluster")
+    }.getMessage should be("Autoscaling Group test-cluster not found")
+  }
+
+  it should "throw error when name yeilds more than 1 ASG" in {
+    val request = ArgumentCaptor.forClass(classOf[DescribeAutoScalingGroupsRequest])
+
+    val mockResult = new DescribeAutoScalingGroupsResult()
+      .withAutoScalingGroups(new AutoScalingGroup(), new AutoScalingGroup())
+    when(mockClient.describeAutoScalingGroups(request.capture())).thenReturn(mockResult)
+    val awsAutoScalingGroup = new AutoScalingGroups(mockClient)
+
+    intercept[RuntimeException] {
+      awsAutoScalingGroup.currentNodes("test-cluster")
+    }.getMessage should be("Multiple AutoScaling groups found for test-cluster")
+  }
+
   it should "return true for #supportsScaleTo" in {
     new AutoScalingGroups(mockClient).supportsScaleTo should be(true)
   }
