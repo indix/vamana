@@ -23,5 +23,5 @@ class CloudWatchCollector(client: AmazonCloudWatchClient) extends Collector {
 }
 
 object CloudWatchCollector {
-  def apply(): CloudWatchCollector = new CloudWatchCollector(new AmazonCloudWatchClient)
+  CollectorFactory.register(new CloudWatchCollector(new AmazonCloudWatchClient))
 }

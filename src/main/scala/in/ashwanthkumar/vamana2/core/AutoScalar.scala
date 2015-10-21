@@ -1,5 +1,7 @@
 package in.ashwanthkumar.vamana2.core
 
+import scala.collection.mutable
+
 trait AutoScalar {
   /**
    * Current number of nodes on the AutoScalar.
@@ -40,4 +42,15 @@ trait AutoScalar {
    * @param nodes
    */
   def scaleDown(cluster: String, nodes: Int)
+}
+
+object AutoScalarRegistry {
+  private lazy val implementations = mutable.Map[String, AutoScalar]()
+
+  def register(autoScalar: AutoScalar): Unit = {
+    implementations.put(autoScalar.getClass.getCanonicalName, autoScalar)
+  }
+
+  def get(name: String) = implementations(name)
+
 }

@@ -2,7 +2,7 @@ package in.ashwanthkumar.vamana2.aws
 
 import com.amazonaws.services.autoscaling.AmazonAutoScalingClient
 import com.amazonaws.services.autoscaling.model.{DescribeAutoScalingGroupsRequest, UpdateAutoScalingGroupRequest}
-import in.ashwanthkumar.vamana2.core.AutoScalar
+import in.ashwanthkumar.vamana2.core.{AutoScalarRegistry, AutoScalar}
 
 import scala.collection.JavaConverters._
 
@@ -46,4 +46,8 @@ class AutoScalingGroups(client: AmazonAutoScalingClient) extends AutoScalar {
    * @inheritdoc
    */
   override def scaleUp(cluster: String, newNodes: Int): Unit = throw new RuntimeException("use scaleTo, I dont' support scaleUp")
+}
+
+object AutoScalingGroups {
+  AutoScalarRegistry.register(new AutoScalingGroups(new AmazonAutoScalingClient))
 }

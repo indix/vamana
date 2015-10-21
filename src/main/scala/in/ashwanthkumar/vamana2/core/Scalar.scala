@@ -10,15 +10,25 @@ trait Supply {
   def available: Int
 }
 
+case class Context(currentSize: Int, cluster: Cluster)
+object Context {
+  def apply(autoScalar: AutoScalar, cluster: Cluster): Context = {
+    Context(autoScalar.currentNodes(cluster.asg), cluster)
+  }
+}
+
 trait Scalar[D <: Demand, S <: Supply] {
   /**
-   * Compute the required number of machines for this demand and supply
+   * Compute the required number of machines for this demand and supply. 
+   *
+   * Always return *new total capacity* of the cluster. The framework 
+   * takes care of scaling up or down automatically.
    *
    * @param demand
    * @param supply
    * @return
    */
-  def requiredNodes(demand: D, supply: S, cluster: Cluster): Int
+  def requiredNodes(demand: D, supply: S, ctx: Context): Int
 
   /**
    * Compute Demand from the demand metrics
@@ -38,9 +48,9 @@ trait Scalar[D <: Demand, S <: Supply] {
 object ScalarFactory {
   private lazy val implementations = mutable.Map[String, Scalar[_, _]]()
 
-  def registerScalar(scalar: Scalar[_, _]): Unit = {
+  def register(scalar: Scalar[_, _]): Unit = {
     implementations.put(scalar.getClass.getCanonicalName, scalar)
   }
 
-  def get(name: String) = implementations(name)
+  def get[D <: Demand, S <: Supply](name: String) = implementations(name).asInstanceOf[Scalar[D, S]]
 }
