@@ -36,10 +36,10 @@ vamana {
 ```
 
 ## Features
-- [ ] Pluggable Metric Store
-- [ ] Pluggable Scalar Implementation
-- [ ] Pluggable Autoscalar implementation
-  - [ ] AutoScaling on AWS
+- [x] Pluggable Metric Collector
+- [x] Pluggable Scalar
+- [ ] Pluggable AutoScalar
+  - [x] AutoScaling on AWS
   - [ ] AutoScaler on GCE
   - [ ] [Vamana1](http://github.com/ashwanthkumar/vamana) for others?
 
