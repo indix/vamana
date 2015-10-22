@@ -3,11 +3,11 @@ package in.ashwanthkumar.vamana2.core
 import scala.collection.mutable
 
 trait Demand {
-  def quantity: Int
+  def quantity: Double
 }
 
 trait Supply {
-  def available: Int
+  def available: Double
 }
 
 case class Context(currentSize: Int, cluster: Cluster)
