@@ -11,7 +11,7 @@ object Vamana extends App {
 
   vamanaConfig.clusters.foreach(implicit cluster => {
     val collector = CollectorFactory.get(cluster.collector)
-    val scalar = ScalarFactory.get(cluster.scalar)
+    val scalar = ScalarFactory.get(cluster.scalar).asInstanceOf[Scalar[Demand, Supply]]
     val autoscalar = AutoScalarRegistry.get(cluster.autoscalar)
     val context = Context(autoscalar, cluster)
     val metricsConfig = cluster.metricsConfig
