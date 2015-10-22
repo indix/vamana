@@ -69,7 +69,7 @@ vamana {
 - [x] Pluggable Metric Collector
   - [x] Amazon CloudWatch
 - [x] Pluggable Scalar
-  - [ ] Hadoop1
+  - [x] Hadoop1 (works best with [hadoop-as-publisher](https://github.com/ashwanthkumar/hadoop-as-publisher))
 - [ ] Pluggable AutoScalar
   - [x] AutoScaling on AWS
   - [ ] AutoScaler on GCE
