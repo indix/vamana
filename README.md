@@ -50,7 +50,7 @@ vamana {
       }
 
       # Range of metrics to retrieve using collector
-      range = "10m" # Range of metrics to retrive
+      range = "10m" # Range of metrics to retrieve
     }
 
     # Collector Implementation to use
