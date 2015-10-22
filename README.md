@@ -10,6 +10,13 @@ Each cluster has its own usage patterns. Certain clusters run 24x7 while certain
 - Though using something like Anisble's ASG plugin made it trivial it was still a pain to add this everytime some one creates a new pipeline.
 - It became a problem when we've more than 1 job pipelines sharing the same cluster, one's scale down shouldn't affect the other's runtime.
 
+## Usage
+```bash
+$ git clone https://github.com/ashwanthkumar/vamana2.git
+$ cd vamana2 && mvn clean package
+$ java -cp target/vamana2-1.0.0-SNAPSHOT.jar in.ashwanthkumar.vamana2.Vamana path/to/clusters.conf
+```
+
 ## Architecture
 ![Vamana2 Architecture](https://raw.githubusercontent.com/ashwanthkumar/vamana2/master/docs/vaman-architecture.png)
 
