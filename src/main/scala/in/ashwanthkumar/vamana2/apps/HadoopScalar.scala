@@ -47,7 +47,7 @@ class HadoopScalar extends Scalar[HDemand, HSupply] {
     HSupply(mapDemandOverLastNmin, reduceDemandOverLastNmin)
   }
 
-  private def mapAndReduceMetrics(metrics: List[Metric], mapMetric: String, reduceMetric: String, minute: Int): (Double, Double) = {
+  private def mapAndReduceMetrics(metrics: List[Metric], mapMetric: String, reduceMetric: String, lastMinutes: Int): (Double, Double) = {
     val metricsInDemand = metrics.map(_.name).toSet
     require(Set(mapMetric, reduceMetric).subsetOf(metricsInDemand), "we need " + mapMetric + " and " + reduceMetric)
 
@@ -55,7 +55,7 @@ class HadoopScalar extends Scalar[HDemand, HSupply] {
     val reduceDemand = metrics.filter(_.name == reduceMetric).head
 
     val now = DateTime.now()
-    val duration = minute * 60 * 1000 // min in millis
+    val duration = lastMinutes * 60 * 1000 // min in millis
     val mapDemandOverLastNmin = mapDemand.points
         .filter(p => math.abs(now.getMillis - p.timestamp) <= duration)
         .map(_.value)
