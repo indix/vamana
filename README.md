@@ -11,6 +11,7 @@ Each cluster has its own usage patterns. Certain clusters run 24x7 while certain
 - It became a problem when we've more than 1 job pipelines sharing the same cluster, one's scale down shouldn't affect the other's runtime.
 
 ## Usage
+Vamana is expected to be run on a Cron (with reasonable duration).
 ```bash
 $ git clone https://github.com/ashwanthkumar/vamana2.git
 $ cd vamana2 && mvn clean package
