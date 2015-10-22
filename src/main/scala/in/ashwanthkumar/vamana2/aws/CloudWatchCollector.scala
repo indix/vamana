@@ -26,11 +26,13 @@ class CloudWatchCollector(client: AmazonCloudWatchClient) extends Collector {
         .withDimensions(dimensions)
         .withStartTime(timeNow.minusMinutes(config.durationInMinutes).toDate)
         .withEndTime(timeNow.toDate)
+        .withPeriod(300)
+        .withStatistics(Statistic.Average)
       config.namespace.map(request.withNamespace)
 
       val result = client.getMetricStatistics(request)
       val points = result.getDatapoints.asScala
-        .map(datapoint => Point(datapoint.getSum, datapoint.getTimestamp.getTime))
+        .map(datapoint => Point(datapoint.getAverage, datapoint.getTimestamp.getTime))
         .toList
       Metric(result.getLabel, points)
     })
