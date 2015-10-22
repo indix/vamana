@@ -48,6 +48,9 @@ vamana {
         name1 = "value1"
         name2 = "value2"
       }
+
+      # Range of metrics to retrieve using collector
+      range = "10m" # Range of metrics to retrive
     }
 
     # Collector Implementation to use

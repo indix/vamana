@@ -1,12 +1,14 @@
 package in.ashwanthkumar.vamana2.core
 
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.collection.JavaConverters._
 
-case class MetricsConfig(demand: List[String], supply: List[String], namespace: Option[String], dimensions: Map[String, String])
+case class MetricsConfig(demand: List[String], supply: List[String],
+                         namespace: Option[String], dimensions: Map[String, String], durationInMinutes: Int)
 object MetricsConfig {
   def fromConfig(config: Config) = {
     val dimensions = config.getConfig("dimensions")
@@ -17,7 +19,8 @@ object MetricsConfig {
       demand = config.getStringList("demand").asScala.toList,
       supply = config.getStringList("supply").asScala.toList,
       namespace = stringOption(config, "namespace"),
-      dimensions = dimensions
+      dimensions = dimensions,
+      durationInMinutes = config.getDuration("range", TimeUnit.MINUTES).toInt
     )
   }
 

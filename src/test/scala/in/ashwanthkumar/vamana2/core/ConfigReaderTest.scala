@@ -24,7 +24,8 @@ class ConfigReaderTest extends FlatSpec {
       dimensions = Map(
         "name1" -> "value1",
         "name2" -> "value2"
-      )
+      ),
+      durationInMinutes = 10
     )
     cluster.metricsConfig should be(expectedMetrics)
   }
