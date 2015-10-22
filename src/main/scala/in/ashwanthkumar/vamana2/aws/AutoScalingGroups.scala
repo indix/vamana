@@ -7,6 +7,11 @@ import in.ashwanthkumar.vamana2.core.{AutoScalarRegistry, AutoScalar}
 import scala.collection.JavaConverters._
 
 class AutoScalingGroups(client: AmazonAutoScalingClient) extends AutoScalar {
+
+  def this() {
+    this(new AmazonAutoScalingClient())
+  }
+
   /**
    * @inheritdoc
    */
@@ -49,5 +54,5 @@ class AutoScalingGroups(client: AmazonAutoScalingClient) extends AutoScalar {
 }
 
 object AutoScalingGroups {
-  AutoScalarRegistry.register(new AutoScalingGroups(new AmazonAutoScalingClient))
+  def apply(): AutoScalingGroups = new AutoScalingGroups(new AmazonAutoScalingClient)
 }

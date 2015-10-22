@@ -45,12 +45,7 @@ trait AutoScalar {
 }
 
 object AutoScalarRegistry {
-  private lazy val implementations = mutable.Map[String, AutoScalar]()
 
-  def register(autoScalar: AutoScalar): Unit = {
-    implementations.put(autoScalar.getClass.getCanonicalName, autoScalar)
-  }
-
-  def get(name: String) = implementations(name)
+  def get(name: String) = Class.forName(name).asSubclass(classOf[AutoScalar]).newInstance()
 
 }

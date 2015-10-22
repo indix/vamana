@@ -1,13 +1,18 @@
 package in.ashwanthkumar.vamana2.aws
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchClient
-import com.amazonaws.services.cloudwatch.model.{Dimension, GetMetricStatisticsRequest}
+import com.amazonaws.services.cloudwatch.model.{StandardUnit, Statistic, Dimension, GetMetricStatisticsRequest}
 import in.ashwanthkumar.vamana2.core._
 import org.joda.time.DateTime
 
 import scala.collection.JavaConverters._
 
 class CloudWatchCollector(client: AmazonCloudWatchClient) extends Collector {
+
+  def this() {
+   this(new AmazonCloudWatchClient())
+  }
+
   override def collectMetrics(metrics: List[String], config: MetricsConfig): List[Metric] = {
     metrics.map(metric => {
       val dimensions = config.dimensions.map(tuple => {
@@ -35,5 +40,5 @@ class CloudWatchCollector(client: AmazonCloudWatchClient) extends Collector {
 }
 
 object CloudWatchCollector {
-  CollectorFactory.register(new CloudWatchCollector(new AmazonCloudWatchClient))
+  def apply(): CloudWatchCollector = new CloudWatchCollector(new AmazonCloudWatchClient)
 }

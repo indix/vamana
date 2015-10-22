@@ -1,20 +1,19 @@
 package in.ashwanthkumar.vamana2.core
 
-import scala.collection.mutable
-
 case class Point(value: Double, timestamp: Long)
-case class Metric(name: String, points: List[Point])
+case class Metric(name: String, points: List[Point]) {
+  def average = points.map(_.value).sum / points.size
+  def min = points.minBy(_.value)
+  def max = points.maxBy(_.value)
+  def sum = points.map(_.value).sum
+}
 
 trait Collector {
   def collectMetrics(metrics: List[String], config: MetricsConfig): List[Metric]
 }
 
 object CollectorFactory {
-  private lazy val implementations = mutable.Map[String, Collector]()
-
-  def register(collector: Collector): Unit = {
-    implementations.put(collector.getClass.getCanonicalName, collector)
+  def get(name: String) = {
+    Class.forName(name).asSubclass(classOf[Collector]).newInstance()
   }
-
-  def get(name: String) = implementations(name)
 }

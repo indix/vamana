@@ -46,11 +46,5 @@ trait Scalar[D <: Demand, S <: Supply] {
 }
 
 object ScalarFactory {
-  private lazy val implementations = mutable.Map[String, Scalar[_, _]]()
-
-  def register(scalar: Scalar[_, _]): Unit = {
-    implementations.put(scalar.getClass.getCanonicalName, scalar)
-  }
-
-  def get[D <: Demand, S <: Supply](name: String) = implementations(name).asInstanceOf[Scalar[D, S]]
+  def get(name: String) = Class.forName(name).newInstance()
 }
