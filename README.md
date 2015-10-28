@@ -1,7 +1,7 @@
 [![Build Status](https://snap-ci.com/ashwanthkumar/vamana2/branch/master/build_image)](https://snap-ci.com/ashwanthkumar/vamana2/branch/master)
 
-# Vamana2
-[Vamana2](https://en.wikipedia.org/wiki/Vamana) is your buddy on AWS when you're managing systems behind AutoScaling Groups. It fills the missing gaps on ASG for scaling clusters.
+# Vamana
+[Vamana](https://en.wikipedia.org/wiki/Vamana) is an Autoscalar Abstraction that provides ability to scale clusters on the cloud. Vamana by itself doesn't do autoscaling (not yet), but uses the Autoscalar available on various cloud platforms.  Some autoscalars on the cloud support scaling up / down based on application metrics collected on their platform. If you're already using a metric collection system you need not move away or send the same metrics to two different places instead Vamana can read metrics from any metrics store and perform autoscaling of your application. 
 
 ## Motivation
 I'm managing quite a number of Hadoop Cluster (across environments) whose TTs are backed by Auto Scaling Groups (ASG). 
@@ -9,6 +9,7 @@ Each cluster has its own usage patterns. Certain clusters run 24x7 while certain
 - We were forced to add Scale Up and Scale Down stages on the beginning and end of our job pipelines.
 - Though using something like Anisble's ASG plugin made it trivial it was still a pain to add this everytime some one creates a new pipeline.
 - It became a problem when we've more than 1 job pipelines sharing the same cluster, one's scale down shouldn't affect the other's runtime.
+- Overnight / weekend failures makes the cluster remain idle.
 
 ## Usage
 Vamana is expected to be run on a Cron (with reasonable duration).
@@ -78,14 +79,17 @@ vamana {
   - [x] Amazon CloudWatch
 - [x] Pluggable Scalar
   - [x] Hadoop1 (works best with [hadoop-as-publisher](https://github.com/ashwanthkumar/hadoop-as-publisher))
-- [ ] Pluggable AutoScalar
+- [x] Pluggable AutoScalar
   - [x] AutoScaling on AWS
+  - [ ] SpotFleet on AWS
   - [ ] AutoScaler on GCE
-  - [ ] [Vamana1](http://github.com/ashwanthkumar/vamana) for others?
 
 ## References / Inspirations
 - http://techblog.netflix.com/2013/11/scryer-netflixs-predictive-auto-scaling.html - Closed source
 - http://www.qubole.com/blog/product/industrys-first-auto-scaling-hadoop-clusters/ - Paid service
+
+## Status
+This project is being actively developed and should be considered alpha quality. If you're interested to contribute, please feel free to fork and send in a Pull Request.
 
 ## License
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
