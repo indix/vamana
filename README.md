@@ -84,6 +84,8 @@ vamana {
   - [ ] SpotFleet on AWS
   - [ ] AutoScaler on GCE
 
+Presentation ["Introducing Vamana"](http://j.mp/to-vamana) shared with AWS Chennai Meetup October, 2015.
+
 ## References / Inspirations
 - http://techblog.netflix.com/2013/11/scryer-netflixs-predictive-auto-scaling.html - Closed source
 - http://www.qubole.com/blog/product/industrys-first-auto-scaling-hadoop-clusters/ - Paid service
