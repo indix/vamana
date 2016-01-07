@@ -69,7 +69,7 @@ vamana {
     autoscalar = "in.ashwanthkumar.vamana2.aws.AutoScalingGroups"
 
     # Scalar Implementation to use
-    scalar = "in.ashwanthkumar.vamana2.examples.HadoopScalar"
+    scalar = "in.ashwanthkumar.vamana2.apps.HadoopScalar"
   }]
 }
 ```
