@@ -48,7 +48,7 @@ object Cluster {
   }
 }
 
-case class VamanaConfiguration(clusters: List[Cluster])
+case class VamanaConfiguration(clusters: List[Cluster], notifyConfig: Config)
 
 object ConfigReader {
   private val NAMESPACE = "vamana"
@@ -59,7 +59,7 @@ object ConfigReader {
       .map(Cluster.fromConfig)
       .toList
 
-    VamanaConfiguration(clusters)
+    VamanaConfiguration(clusters, globalConfig.getConfig("notify"))
   }
 
   def load(name: String): VamanaConfiguration = load(ConfigFactory.load(name))

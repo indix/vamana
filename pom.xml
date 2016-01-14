@@ -47,6 +47,19 @@
             <version>1.2.1</version>
         </dependency>
 
+        <!-- Notify Deps -->
+        <dependency>
+            <groupId>in.ashwanthkumar</groupId>
+            <artifactId>notify-core</artifactId>
+            <version>1.0-rc2</version>
+        </dependency>
+        <dependency>
+            <groupId>in.ashwanthkumar</groupId>
+            <artifactId>notify-slack</artifactId>
+            <version>1.0-rc2</version>
+        </dependency>
+        <!-- End of Notify Deps -->
+
         <!-- Logging Deps -->
         <dependency>
             <groupId>com.typesafe.scala-logging</groupId>
