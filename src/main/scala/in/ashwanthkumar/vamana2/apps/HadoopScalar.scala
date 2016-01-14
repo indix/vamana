@@ -3,6 +3,8 @@ package in.ashwanthkumar.vamana2.apps
 import in.ashwanthkumar.vamana2.core._
 import org.joda.time.DateTime
 
+import scala.concurrent.duration.Duration
+
 case class HDemand(map: Double, reduce: Double) extends Demand {
   def quantity = map + reduce
 }
@@ -26,7 +28,6 @@ class HadoopScalar extends Scalar[HDemand, HSupply] {
     // If the cluster is running with min capacity and demand > supply, scale it up to max size
     // else keep the cluster intact
     if (demand.quantity == 0.0) ctx.cluster.minNodes
-    else if (ctx.currentSize == ctx.cluster.maxNodes) ctx.currentSize
     else if (demand.quantity > supply.available && ctx.currentSize < ctx.cluster.maxNodes) ctx.cluster.maxNodes
     else ctx.currentSize
   }
@@ -35,36 +36,28 @@ class HadoopScalar extends Scalar[HDemand, HSupply] {
    * @inheritdoc
    */
   override def demand(metrics: List[Metric]): HDemand = {
-    val (mapDemandOverLastNmin, reduceDemandOverLastNmin) = mapAndReduceMetrics(metrics, "map_demand", "reduce_demand", 30)
-    HDemand(mapDemandOverLastNmin, reduceDemandOverLastNmin)
+    val (mapDemand, reduceDemand) = mapAndReduceMetrics(metrics, "map_demand", "reduce_demand")
+    HDemand(mapDemand, reduceDemand)
   }
 
   /**
    * @inheritdoc
    */
   override def supply(metrics: List[Metric]): HSupply = {
-    val (mapDemandOverLastNmin, reduceDemandOverLastNmin) = mapAndReduceMetrics(metrics, "map_supply", "reduce_supply", 30)
-    HSupply(mapDemandOverLastNmin, reduceDemandOverLastNmin)
+    val (mapSupply, reduceSupply) = mapAndReduceMetrics(metrics, "map_supply", "reduce_supply")
+    HSupply(mapSupply, reduceSupply)
   }
 
-  private def mapAndReduceMetrics(metrics: List[Metric], mapMetric: String, reduceMetric: String, lastMinutes: Int): (Double, Double) = {
+  private[apps] def mapAndReduceMetrics(metrics: List[Metric], mapMetric: String, reduceMetric: String): (Double, Double) = {
     val metricsInDemand = metrics.map(_.name).toSet
     require(Set(mapMetric, reduceMetric).subsetOf(metricsInDemand), "we need " + mapMetric + " and " + reduceMetric)
 
     val mapDemand = metrics.filter(_.name == mapMetric).head
     val reduceDemand = metrics.filter(_.name == reduceMetric).head
 
-    val now = DateTime.now()
-    val duration = lastMinutes * 60 * 1000 // min in millis
-    val mapDemandOverLastNmin = mapDemand.points
-        .filter(p => math.abs(now.getMillis - p.timestamp) <= duration)
-        .map(_.value)
-        .sum
-    val reduceDemandOverLastNmin = reduceDemand.points
-      .filter(p => math.abs(now.getMillis - p.timestamp) <= duration)
-      .map(_.value)
-      .sum
-    (mapDemandOverLastNmin, reduceDemandOverLastNmin)
+    val mapMetrics = mapDemand.points.map(_.value).sum
+    val reduceMetrics = reduceDemand.points.map(_.value).sum
+    (mapMetrics, reduceMetrics)
   }
 }
 
