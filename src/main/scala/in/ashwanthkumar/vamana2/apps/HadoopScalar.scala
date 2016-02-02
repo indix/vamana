@@ -43,7 +43,7 @@ class HadoopScalar extends Scalar[HDemand, HSupply] {
    */
   override def demand(metrics: List[Metric]): HDemand = {
     val (mapDemand, reduceDemand) = mapAndReduceMetrics(metrics, "map_demand", "reduce_demand")
-    HDemand(mapDemand, reduceDemand)
+    HDemand(mapDemand.sum, reduceDemand.sum)
   }
 
   /**
@@ -51,18 +51,18 @@ class HadoopScalar extends Scalar[HDemand, HSupply] {
    */
   override def supply(metrics: List[Metric]): HSupply = {
     val (mapSupply, reduceSupply) = mapAndReduceMetrics(metrics, "map_supply", "reduce_supply")
-    HSupply(mapSupply, reduceSupply)
+    HSupply(mapSupply.head, reduceSupply.head)
   }
 
-  private[apps] def mapAndReduceMetrics(metrics: List[Metric], mapMetric: String, reduceMetric: String): (Double, Double) = {
+  private[apps] def mapAndReduceMetrics(metrics: List[Metric], mapMetric: String, reduceMetric: String): (List[Double], List[Double]) = {
     val metricsInDemand = metrics.map(_.name).toSet
     require(Set(mapMetric, reduceMetric).subsetOf(metricsInDemand), "we need " + mapMetric + " and " + reduceMetric)
 
     val mapDemand = metrics.filter(_.name == mapMetric).head
     val reduceDemand = metrics.filter(_.name == reduceMetric).head
 
-    val mapMetrics = mapDemand.points.map(_.value).sum
-    val reduceMetrics = reduceDemand.points.map(_.value).sum
+    val mapMetrics = mapDemand.points.sortBy(_.timestamp)(Ordering[Long].reverse).map(_.value)
+    val reduceMetrics = reduceDemand.points.sortBy(_.timestamp)(Ordering[Long].reverse).map(_.value)
     (mapMetrics, reduceMetrics)
   }
 }
