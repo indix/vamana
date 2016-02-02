@@ -1,7 +1,10 @@
 package in.ashwanthkumar.vamana2.apps
 
+import com.typesafe.scalalogging.slf4j.Logger
+import in.ashwanthkumar.vamana2.Vamana._
 import in.ashwanthkumar.vamana2.core._
 import org.joda.time.DateTime
+import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration.Duration
 
@@ -20,10 +23,13 @@ case class HSupply(map: Double, reduce: Double) extends Supply {
  *
  */
 class HadoopScalar extends Scalar[HDemand, HSupply] {
+  private val log = Logger(LoggerFactory.getLogger(getClass))
   /**
    * @inheritdoc
    */
   override def requiredNodes(demand: HDemand, supply: HSupply, ctx: Context): Int = {
+    log.info(s"Demand found is $demand")
+    log.info(s"Supply found is $supply")
     // If the demand is nothing, scale down to cluster min size
     // If the cluster is running with min capacity and demand > supply, scale it up to max size
     // else keep the cluster intact
