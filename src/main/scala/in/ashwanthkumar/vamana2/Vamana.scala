@@ -34,7 +34,7 @@ object Vamana extends App {
     // Step 3 - Update the autoscalar accordingly, if there was a change in # of nodes
     if(context.currentSize != newNodesCount) {
       logInfo(s"Updating ${cluster.name}, size to $newNodesCount from ${context.currentSize}")
-      notifier.notify(s"Updating ${cluster.name}, size to $newNodesCount from ${context.currentSize}")
+      notifier.notify(s"Updating size of ${cluster.name} from ${context.currentSize} to $newNodesCount")
       autoscalar.scaleTo(cluster.asId, newNodesCount)
     }
   })
