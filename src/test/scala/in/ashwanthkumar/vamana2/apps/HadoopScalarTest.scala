@@ -27,6 +27,20 @@ class HadoopScalarTest extends FlatSpec {
     numberOfNodes should be(10)
   }
 
+  it should "scale down when max nodes is reduced with demand being high" in {
+    val scalar = new HadoopScalar()
+    val mockContext = context(currentSize = 15, minNodes = 1, maxNodes = 10)
+    val numberOfNodes = scalar.requiredNodes(HDemand(100.0, 50.0), HSupply(100.0, 50.0), mockContext)
+    numberOfNodes should be(10)
+  }
+
+  it should "scale down when max nodes is reduced with demand being reduced as well" in {
+    val scalar = new HadoopScalar()
+    val mockContext = context(currentSize = 15, minNodes = 1, maxNodes = 10)
+    val numberOfNodes = scalar.requiredNodes(HDemand(80.0, 50.0), HSupply(100.0, 50.0), mockContext)
+    numberOfNodes should be(10)
+  }
+
   it should "compute sum for demand from metrics" in {
     val scalar = new HadoopScalar()
     val metrics = List(

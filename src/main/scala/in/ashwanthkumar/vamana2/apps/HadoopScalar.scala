@@ -30,11 +30,9 @@ class HadoopScalar extends Scalar[HDemand, HSupply] {
   override def requiredNodes(demand: HDemand, supply: HSupply, ctx: Context): Int = {
     log.info(s"Demand found is $demand")
     log.info(s"Supply found is $supply")
-    // If the demand is nothing, scale down to cluster min size
-    // If the cluster is running with min capacity and demand > supply, scale it up to max size
-    // else keep the cluster intact
+
     if (demand.quantity == 0.0) ctx.cluster.minNodes
-    else if (demand.quantity > supply.available && ctx.currentSize < ctx.cluster.maxNodes) ctx.cluster.maxNodes
+    else if (demand.quantity > supply.available || ctx.currentSize > ctx.cluster.maxNodes) ctx.cluster.maxNodes
     else ctx.currentSize
   }
 
