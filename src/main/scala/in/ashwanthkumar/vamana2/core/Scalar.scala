@@ -1,5 +1,7 @@
 package in.ashwanthkumar.vamana2.core
 
+import com.typesafe.config.Config
+
 import scala.collection.mutable
 
 trait Demand {
@@ -46,5 +48,17 @@ trait Scalar[D <: Demand, S <: Supply] {
 }
 
 object ScalarFactory {
-  def get(name: String) = Class.forName(name).newInstance()
+  def get(name: String, scalarConfig: Option[Config] = None) = {
+    val classSpec: Class[_] = Class.forName(name).asSubclass(classOf[Scalar[_, _]])
+    scalarConfig match {
+      case Some(config) =>
+        try {
+          classSpec.getConstructor(classOf[Config]).newInstance(config)
+        } catch {
+          case notfound: NoSuchMethodException => classSpec.newInstance()
+        }
+
+      case None => classSpec.newInstance()
+    }
+  }
 }

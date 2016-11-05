@@ -1,5 +1,7 @@
 package in.ashwanthkumar.vamana2.core
 
+import com.typesafe.config.Config
+
 case class Point(value: Double, timestamp: Long)
 case class Metric(name: String, points: List[Point]) {
   def average = points.map(_.value).sum / points.size
@@ -13,7 +15,17 @@ trait Collector {
 }
 
 object CollectorFactory {
-  def get(name: String) = {
-    Class.forName(name).asSubclass(classOf[Collector]).newInstance()
+  def get(name: String, collectorConfig: Option[Config] = None) = {
+    val classSpec: Class[_ <: Collector] = Class.forName(name).asSubclass(classOf[Collector])
+    collectorConfig match {
+      case Some(config) =>
+        try {
+          classSpec.getConstructor(classOf[Config]).newInstance(config)
+        } catch {
+          case notfound: NoSuchMethodException => classSpec.newInstance()
+        }
+      case None =>
+        classSpec.newInstance()
+    }
   }
 }

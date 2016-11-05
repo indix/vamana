@@ -1,5 +1,7 @@
 package in.ashwanthkumar.vamana2.core
 
+import com.typesafe.config.Config
+
 import scala.collection.mutable
 
 trait AutoScalar {
@@ -46,6 +48,18 @@ trait AutoScalar {
 
 object AutoScalarRegistry {
 
-  def get(name: String) = Class.forName(name).asSubclass(classOf[AutoScalar]).newInstance()
+  def get(name: String, autoscalarConfig: Option[Config] = None) = {
+    val classSpec: Class[_ <: AutoScalar] = Class.forName(name).asSubclass(classOf[AutoScalar])
+    autoscalarConfig match {
+      case Some(config) =>
+        try {
+          classSpec.getConstructor(classOf[Config]).newInstance(config)
+        } catch {
+          case notfound: NoSuchMethodException => classSpec.newInstance()
+        }
+      case None =>
+        classSpec.newInstance()
+    }
+  }
 
 }

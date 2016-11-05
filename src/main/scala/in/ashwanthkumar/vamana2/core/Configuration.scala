@@ -31,7 +31,9 @@ object MetricsConfig {
 }
 
 case class Cluster(name: String, asId: String, minNodes: Int, maxNodes: Int, metricsConfig: MetricsConfig,
-                   scalar: String, collector: String, autoscalar: String)
+                   scalar: String, scalaConfig: Option[Config] = None,
+                   collector: String, collectorConfig: Option[Config] = None,
+                   autoscalar: String, autoscalarConfig: Option[Config] = None)
 object Cluster {
   def fromConfig(config: Config) = {
     val metricsConfig = MetricsConfig.fromConfig(config.getConfig("metrics"))

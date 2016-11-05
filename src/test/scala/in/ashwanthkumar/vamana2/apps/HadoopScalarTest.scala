@@ -62,7 +62,7 @@ class HadoopScalarTest extends FlatSpec {
   def context(currentSize: Int, minNodes: Int, maxNodes: Int): Context = {
     Context(currentSize,
       Cluster("foo", "bar-asg", minNodes, maxNodes,
-        MetricsConfig(Nil, Nil, None, Map(), 6 * 60), "scalar", "collector", "autoscalar")
+        MetricsConfig(Nil, Nil, None, Map(), 6 * 60), "scalar", None, "collector", None, "autoscalar", None)
     )
   }
 }
