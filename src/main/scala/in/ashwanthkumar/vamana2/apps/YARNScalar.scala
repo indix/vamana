@@ -48,9 +48,9 @@ class YARNScalar extends Scalar[CDemand, CSupply] {
     val containersAllocated = containerMetrics(metrics, "containers_allocated")
     val activeNodes = containerMetrics(metrics, "active_nodes")
     CDemand(
-      containersPending.headOption.getOrElse(0.0),
-      containersAllocated.headOption.getOrElse(0.0),
-      activeNodes.headOption.getOrElse(0.0)
+      containersPending.sum,
+      containersAllocated.sum,
+      activeNodes.sum
     )
   }
 
@@ -59,7 +59,7 @@ class YARNScalar extends Scalar[CDemand, CSupply] {
     */
   override def supply(metrics: List[Metric]): CSupply = {
     val activeNodes = containerMetrics(metrics, "active_nodes")
-    CSupply(activeNodes.headOption.getOrElse(0.0))
+    CSupply(activeNodes.sum)
   }
 
   private[apps] def containerMetrics(metrics: List[Metric], metricName: String): List[Double] = {
