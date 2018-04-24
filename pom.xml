@@ -22,7 +22,7 @@
     <groupId>in.ashwanthkumar</groupId>
     <artifactId>vamana2</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-rc6</version>
+    <version>1.0-rc7</version>
     <name>vamana2</name>
 
     <properties>
