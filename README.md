@@ -69,7 +69,7 @@ vamana {
     autoscalar = "in.ashwanthkumar.vamana2.aws.AutoScalingGroups"
 
     # Scalar Implementation to use
-    scalar = "in.ashwanthkumar.vamana2.apps.HadoopScalar"
+    scalar = "in.ashwanthkumar.vamana2.apps.HadoopScalar" # Use YARNScalar for YARN clusters
   }]
 }
 ```
@@ -79,6 +79,7 @@ vamana {
   - [x] Amazon CloudWatch
 - [x] Pluggable Scalar
   - [x] Hadoop1 (works best with [hadoop-as-publisher](https://github.com/ashwanthkumar/hadoop-as-publisher))
+  - [x] YARN (works best with [hadoop-as-publisher](https://github.com/ashwanthkumar/hadoop-as-publisher))
 - [x] Pluggable AutoScalar
   - [x] AutoScaling on AWS
   - [ ] SpotFleet on AWS
@@ -91,7 +92,9 @@ Presentation ["Introducing Vamana"](http://j.mp/to-vamana) shared with AWS Chenn
 - http://www.qubole.com/blog/product/industrys-first-auto-scaling-hadoop-clusters/ - Paid service
 
 ## Status
-This project is being actively developed and should be considered alpha quality. If you're interested to contribute, please feel free to fork and send in a Pull Request.
+This project has been used in Production at Indix for more than 3 years for managing multiple Hadoop1 clusters with very good success. YARN Support has been added recently.
+
+If you've any feature requests, please feel free to send a PR or create an issue.
 
 ## License
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
