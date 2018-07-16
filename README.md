@@ -1,4 +1,6 @@
-[![Build Status](https://snap-ci.com/ashwanthkumar/vamana2/branch/master/build_image)](https://snap-ci.com/ashwanthkumar/vamana2/branch/master)
+[![Build Status](https://travis-ci.org/indix/vamana.svg?branch=master)](https://travis-ci.org/indix/vamana)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/in.ashwanthkumar.vamana2/Vamana/badge.svg)](https://maven-badges.herokuapp.com/maven-central/in.ashwanthkumar.vamana2/Vamana)
+
 
 # Vamana
 [Vamana](https://en.wikipedia.org/wiki/Vamana) is an Autoscalar Abstraction that provides ability to scale clusters on the cloud. Vamana by itself doesn't do autoscaling (not yet), but uses the Autoscalar available on various cloud platforms.  Some autoscalars on the cloud support scaling up / down based on application metrics collected on their platform. If you're already using a metric collection system you need not move away or send the same metrics to two different places instead Vamana can read metrics from any metrics store and perform autoscaling of your application. 
