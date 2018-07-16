@@ -7,20 +7,20 @@
 I'm managing quite a number of Hadoop Cluster (across environments) whose TTs are backed by Auto Scaling Groups (ASG). 
 Each cluster has its own usage patterns. Certain clusters run 24x7 while certain other clusters need to be up only during certain duration (when we have jobs running) and not always.
 - We were forced to add Scale Up and Scale Down stages on the beginning and end of our job pipelines.
-- Though using something like Anisble's ASG plugin made it trivial it was still a pain to add this everytime some one creates a new pipeline.
+- Though using something like Ansible's ASG plugin made it trivial it was still a pain to add this everytime some one creates a new pipeline.
 - It became a problem when we've more than 1 job pipelines sharing the same cluster, one's scale down shouldn't affect the other's runtime.
 - Overnight / weekend failures makes the cluster remain idle.
 
 ## Usage
 Vamana is expected to be run on a Cron (with reasonable duration).
 ```bash
-$ git clone https://github.com/ashwanthkumar/vamana2.git
-$ cd vamana2 && mvn clean package
-$ java -cp target/vamana2-1.0.0-SNAPSHOT.jar in.ashwanthkumar.vamana2.Vamana path/to/clusters.conf
+$ git clone https://github.com/indix/vamana.git
+$ cd vamana && mvn clean package
+$ java -cp target/vamana-1.0.0-SNAPSHOT.jar in.ashwanthkumar.vamana2.Vamana path/to/clusters.conf
 ```
 
 ## Architecture
-![Vamana2 Architecture](https://raw.githubusercontent.com/ashwanthkumar/vamana2/master/docs/vaman-architecture.png)
+![Vamana2 Architecture](https://raw.githubusercontent.com/indix/vamana/master/docs/vaman-architecture.png)
 
 ## Configuration
 Sample configuration would be
