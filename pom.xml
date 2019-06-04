@@ -51,12 +51,12 @@
         <dependency>
             <groupId>in.ashwanthkumar</groupId>
             <artifactId>notify-core</artifactId>
-            <version>1.0-rc2</version>
+            <version>1.0-rc3</version>
         </dependency>
         <dependency>
             <groupId>in.ashwanthkumar</groupId>
             <artifactId>notify-slack</artifactId>
-            <version>1.0-rc2</version>
+            <version>1.0-rc3</version>
         </dependency>
         <!-- End of Notify Deps -->
 
